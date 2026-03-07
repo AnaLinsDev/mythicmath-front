@@ -53,18 +53,3 @@ In the terminal output, you will see options to open the app in:
 * **Android emulator**
 * **iOS simulator**
 * **Expo Go** (scan the QR code with the Expo Go app)
-
----
-
-## Project structure
-
-You can start developing by editing the files inside the **app** directory.
-
-This project uses **file-based routing** with Expo Router.
-
-```
-app/
- ├ (auth)
- ├ (tabs)
- └ _layout.tsx
-```
