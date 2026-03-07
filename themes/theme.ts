@@ -1,41 +1,62 @@
 export type ThemeColors = {
-  background: string
-  foreground: string
-  card: string
-  cardForeground: string
-  popover: string
-  popoverForeground: string
-  primary: string
-  primaryForeground: string
-  secondary: string
-  secondaryForeground: string
-  muted: string
-  mutedForeground: string
-  accent: string
-  accentForeground: string
-  destructive: string
-  destructiveForeground: string
-  border: string
-  input: string
-  inputBackground: string
-  switchBackground: string
-  ring: string
-}
+  background: string;
+  foreground: string;
+  text: string;
+  textSecondary: string;
+  backgroundAuthDarker: [string, string];
+  backgroundAuthClearer: [string, string];
+  card: string;
+  cardForeground: string;
+  popover: string;
+  popoverForeground: string;
+  primary: string;
+  error: string;
+  purple: string;
+  purpleDarker: string;
+  blue: string;
+  blueDarker: string;
+  secondary: string;
+  secondaryForeground: string;
+  muted: string;
+  mutedForeground: string;
+  accent: string;
+  accentForeground: string;
+  destructive: string;
+  destructiveForeground: string;
+  border: string;
+  input: string;
+  inputBackground: string;
+  switchBackground: string;
+  ring: string;
+};
 
 export const lightTheme: ThemeColors = {
   background: "#ffffff",
-  foreground: "oklch(0.145 0 0)",
+  foreground: "#0a0a0a",
+
+  text: "#0a0a0a",
+  textSecondary: "#3e3e3e",
+
+  backgroundAuthDarker: ["#7e22ce", "#1d4ed8"],
+  backgroundAuthClearer: ["#9333ea", "#2563eb"],
 
   card: "#ffffff",
-  cardForeground: "oklch(0.145 0 0)",
+  cardForeground: "#0a0a0a",
 
-  popover: "oklch(1 0 0)",
-  popoverForeground: "oklch(0.145 0 0)",
+  popover: "#ffffff",
+  popoverForeground: "#0a0a0a",
 
   primary: "#030213",
-  primaryForeground: "oklch(1 0 0)",
+  error: "#ff4d4f",
 
-  secondary: "oklch(0.95 0.0058 264.53)",
+  purple: "#9333ea",
+  purpleDarker: "#7e22ce",
+
+  blue: "#2563eb",
+  blueDarker: "#1d4ed8",
+
+
+  secondary: "#f4f4f5",
   secondaryForeground: "#030213",
 
   muted: "#ececf0",
@@ -52,38 +73,49 @@ export const lightTheme: ThemeColors = {
   inputBackground: "#f3f3f5",
   switchBackground: "#cbced4",
 
-  ring: "oklch(0.708 0 0)",
-}
-
+  ring: "#b4b4b4",
+};
 export const darkTheme: ThemeColors = {
-  background: "oklch(0.145 0 0)",
-  foreground: "oklch(0.985 0 0)",
+  background: "#0a0a0a",
+  foreground: "#fafafa",
 
-  card: "oklch(0.145 0 0)",
-  cardForeground: "oklch(0.985 0 0)",
+  text: "#0a0a0a",
+  textSecondary: "#2f2f2f",
 
-  popover: "oklch(0.145 0 0)",
-  popoverForeground: "oklch(0.985 0 0)",
+  backgroundAuthDarker: ["#7e22ce", "#1d4ed8"],
+  backgroundAuthClearer: ["#9333ea", "#2563eb"],
 
-  primary: "oklch(0.985 0 0)",
-  primaryForeground: "oklch(0.205 0 0)",
+  card: "#0a0a0a",
+  cardForeground: "#fafafa",
 
-  secondary: "oklch(0.269 0 0)",
-  secondaryForeground: "oklch(0.985 0 0)",
+  popover: "#0a0a0a",
+  popoverForeground: "#fafafa",
 
-  muted: "oklch(0.269 0 0)",
-  mutedForeground: "oklch(0.708 0 0)",
+  primary: "#fafafa",
+  error: "#ff4d4f",
 
-  accent: "oklch(0.269 0 0)",
-  accentForeground: "oklch(0.985 0 0)",
+  purple: "#9333ea",
+  purpleDarker: "#7e22ce",
 
-  destructive: "oklch(0.396 0.141 25.723)",
-  destructiveForeground: "oklch(0.637 0.237 25.331)",
+  blue: "#2563eb",
+  blueDarker: "#1d4ed8",
 
-  border: "oklch(0.269 0 0)",
-  input: "oklch(0.269 0 0)",
-  inputBackground: "oklch(0.269 0 0)",
+  secondary: "#3f3f46",
+  secondaryForeground: "#fafafa",
+
+  muted: "#3f3f46",
+  mutedForeground: "#b4b4b4",
+
+  accent: "#3f3f46",
+  accentForeground: "#fafafa",
+
+  destructive: "#b91c1c",
+  destructiveForeground: "#fecaca",
+
+  border: "#3f3f46",
+  input: "#3f3f46",
+  inputBackground: "#3f3f46",
   switchBackground: "#cbced4",
 
-  ring: "oklch(0.439 0 0)",
-}
+  ring: "#737373",
+};
