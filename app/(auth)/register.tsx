@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image } from "react-native";
 import { router } from "expo-router";
 import { useTheme } from "@/hooks/useTheme";
 import { ButtonLink } from "@/components/ButtonLink";
@@ -6,7 +6,6 @@ import ButtonGradient from "@/components/ButtonGradient";
 import CardAuth from "@/components/CardAuth";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
 
 // React Hook Form controla os campos do formulário com alta performance
 import { useForm, Controller } from "react-hook-form";
@@ -25,24 +24,23 @@ import { globalStyles } from "@/styles/globalStyles";
 const registerSchema = z
   .object({
     // name deve existir e ter pelo menos 1 caractere
-    name: z.string().min(1, "Name is required"),
+    name: z.string().min(1, "O nome é obrigatório"),
 
     // email precisa ter formato válido
-    email: z.string().email("Invalid email"),
+    email: z.string().email("Digite um e-mail válido"),
 
     // password precisa ter pelo menos 6 caracteres
-    password: z.string().min(6, "Minimum 6 characters"),
+    password: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
 
     // confirmPassword será comparado depois
     confirmPassword: z.string(),
   })
-
   /*
     refine permite criar validações personalizadas.
     Aqui verificamos se password === confirmPassword
   */
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "As senhas não coincidem",
     path: ["confirmPassword"], // erro aparecerá nesse campo
   });
 
@@ -52,7 +50,7 @@ const registerSchema = z
 */
 type FormData = z.infer<typeof registerSchema>;
 
-export default function Register() {
+export default function RegisterScreen() {
   const { theme } = useTheme();
   const globalTheme = globalStyles(theme);
 
@@ -71,6 +69,13 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(registerSchema),
+
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   /*
@@ -90,7 +95,10 @@ export default function Register() {
       style={styles.background}
     >
       <View style={styles.container}>
-        <Text style={globalTheme.message}>LOGO HERE u.u</Text>
+        <Image
+          source={require("@/assets/images/logo_transparent.png")}
+          style={{ width: 100, height: 100, borderRadius: 100 }}
+        />
 
         <Text style={globalTheme.title}>Criar Conta</Text>
         <Text style={globalTheme.message}>
@@ -111,7 +119,7 @@ export default function Register() {
             render={({ field: { onChange, value } }) => (
               <>
                 <TextInput
-                  placeholder="Name*"
+                  placeholder="Nome*"
                   // value vem do React Hook Form
                   value={value}
                   // qualquer alteração atualiza o estado interno do formulário
@@ -182,7 +190,7 @@ export default function Register() {
             render={({ field: { onChange, value } }) => (
               <>
                 <TextInput
-                  placeholder="Password*"
+                  placeholder="Senha*"
                   secureTextEntry
                   value={value}
                   onChangeText={onChange}
@@ -213,7 +221,7 @@ export default function Register() {
             render={({ field: { onChange, value } }) => (
               <>
                 <TextInput
-                  placeholder="Confirm Password*"
+                  placeholder="Confirme a Senha*"
                   secureTextEntry
                   value={value}
                   onChangeText={onChange}
@@ -244,7 +252,7 @@ export default function Register() {
             3- se inválido → preenche errors automaticamente
           */}
           <ButtonGradient
-            title="Register"
+            title="Cadastre-se"
             onPress={handleSubmit(handleRegister)}
           />
 
@@ -252,14 +260,8 @@ export default function Register() {
         </CardAuth>
 
         <View style={styles.messageRow}>
-          <AntDesign
-            name="crown"
-            size={20}
-            color="gold"
-            style={{ marginTop: 36 }}
-          />
           <Text style={globalTheme.message_bottom}>
-            Comece do nível 1 e evolua até o topo!
+            ✨ Comece do nível 1 e evolua até o topo!
           </Text>
         </View>
       </View>

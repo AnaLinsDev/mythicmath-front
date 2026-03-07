@@ -31,7 +31,7 @@ export const globalStyles = (theme: any) =>
 
     message_bottom: {
       color: theme.secondary,
-      fontSize: 16,
+      fontSize: 12,
       marginTop: 40,
     },
 
