@@ -21,8 +21,6 @@ const loginSchema = z.object({
     .trim()
     .min(1, "Nome ou e-mail é obrigatório")
     .refine((value) => {
-      console.log("value: " + value);
-
       if (!value) return true; // evita rodar refine quando vazio
 
       if (value.includes("@")) {
@@ -50,8 +48,8 @@ export default function LoginScreen() {
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      identifier: "",
-      password: "",
+      identifier: "ana",
+      password: "password",
     },
   });
 

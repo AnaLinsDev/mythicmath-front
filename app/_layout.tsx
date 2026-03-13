@@ -7,8 +7,6 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <ThemeProvider>
         <Stack screenOptions={{ headerShown: false, animation: "none" }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(tabs)" />
         </Stack>
       </ThemeProvider>
     </SafeAreaProvider>

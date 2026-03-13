@@ -72,10 +72,10 @@ export default function RegisterScreen() {
     resolver: zodResolver(registerSchema),
 
     defaultValues: {
-      name: "testes",
-      email: "testes@gmail.com",
-      password: "testes",
-      confirmPassword: "testes",
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
