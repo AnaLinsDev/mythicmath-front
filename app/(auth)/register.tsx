@@ -16,6 +16,7 @@ import { z } from "zod";
 // Permite conectar Zod com React Hook Form
 import { zodResolver } from "@hookform/resolvers/zod";
 import { globalStyles } from "@/styles/globalStyles";
+import { register } from "@/src/services/authService";
 
 /*
   Aqui criamos o schema de validação do formulário.
@@ -71,10 +72,10 @@ export default function RegisterScreen() {
     resolver: zodResolver(registerSchema),
 
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: "testes",
+      email: "testes@gmail.com",
+      password: "testes",
+      confirmPassword: "testes",
     },
   });
 
@@ -82,9 +83,19 @@ export default function RegisterScreen() {
     Essa função só será executada se TODAS
     as validações do schema passarem.
   */
-  function handleRegister(data: FormData) {
-    console.log(data);
-    router.replace("/(tabs)");
+  async function handleRegister(data: FormData) {
+    try {
+      await register(data);
+      alert("Registrado!");
+      router.replace("/(tabs)");
+    } catch (error: any) {
+      console.log(error);
+
+      const message =
+        error?.response?.data?.detail || error?.message || "Erro ao registrar";
+
+      alert(message);
+    }
   }
 
   return (

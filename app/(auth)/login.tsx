@@ -11,6 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { globalStyles } from "@/styles/globalStyles";
+import { login } from "@/src/services/authService";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -54,16 +55,24 @@ export default function LoginScreen() {
     },
   });
 
-  function handleLogin(data: FormData) {
-    const isEmail = emailRegex.test(data.identifier);
-
+  async function handleLogin(data: FormData) {
     const payload = {
-      email: isEmail ? data.identifier : null,
-      name: !isEmail ? data.identifier : null,
+      login: data.identifier,
       password: data.password,
     };
 
-    console.log(payload);
+    try {
+      await login(payload);
+      alert("Logado!");
+      router.replace("/(tabs)");
+    } catch (error: any) {
+      console.log(error);
+
+      const message =
+        error?.response?.data?.detail || error?.message || "Erro ao logar";
+
+      alert(message);
+    }
 
     router.replace("/(tabs)");
   }
@@ -147,7 +156,7 @@ export default function LoginScreen() {
 
           <ButtonGradient title="Entrar" onPress={handleSubmit(handleLogin)} />
 
-          <ButtonLink title="Já tem conta? Entre aqui" href="/register" />
+          <ButtonLink title="Não tem conta? Cadastre-se" href="/register" />
         </CardAuth>
 
         <View style={styles.messageRow}>
