@@ -57,7 +57,7 @@ export default function LoginScreen() {
 
   async function handleLogin(data: FormData) {
     const payload = {
-      login: data.identifier,
+      identifier: data.identifier,
       password: data.password,
     };
 
@@ -73,8 +73,6 @@ export default function LoginScreen() {
 
       alert(message);
     }
-
-    router.replace("/(tabs)");
   }
 
   return (
