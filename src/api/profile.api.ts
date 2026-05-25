@@ -16,16 +16,14 @@ export const profile = async (): Promise<ProfileResponse> => {
 
 //Update Avatar
 export const updateAvatar = async (
-  formData: FormData,
+  avatar: string,
 ): Promise<UpdateAvatarResponse> => {
+  const payload = {
+    avatar_id: avatar,
+  };
   const response = await api.put<UpdateAvatarResponse>(
     ApiEndpoints.CHANGE_AVATAR,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
+    payload,
   );
 
   return response.data;

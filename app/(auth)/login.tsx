@@ -38,8 +38,8 @@ export default function LoginScreen() {
   } = useForm<FormDataLogin>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      identifier: "analins1",
-      password: "analins1",
+      identifier: "analins123",
+      password: "analins123",
     },
   });
 

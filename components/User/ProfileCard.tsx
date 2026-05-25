@@ -11,6 +11,8 @@ import { ProgressBar } from "../Statistics/ProgressBar";
 import { AvatarProfile } from "./AvatarProfile";
 import { Chip } from "./Chip";
 import { AvatarKey } from "@/constants/avatars";
+import { updateAvatar } from "@/src/api/profile.api";
+import { useAlert } from "@/contexts/alert/useAlert";
 
 type Props = {
   image: AvatarKey;
@@ -35,6 +37,7 @@ export default function ProfileCard({
 }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { show } = useAlert();
 
   const levelText = `${t("screen.profile.level")} ${level}`;
 
@@ -43,6 +46,18 @@ export default function ProfileCard({
   const progressValue = progress * 100;
 
   const percentage = Math.round(progress * 100);
+
+  async function handleEditAvatar(avatar: AvatarKey) {
+    try {
+      await updateAvatar(avatar);
+    } catch {
+      const translatedMessage = t(`errors.CHANGE_AVATAR_ERROR`);
+      show({
+        type: "error",
+        message: translatedMessage,
+      });
+    }
+  }
 
   return (
     <Card
@@ -64,7 +79,15 @@ export default function ProfileCard({
           gap: 12,
         }}
       >
-        <AvatarProfile size={86} source={image} name={name} />
+        <AvatarProfile
+          size={86}
+          source={image}
+          name={name}
+          allowEdit
+          onChange={(newAvatar) => {
+            handleEditAvatar(newAvatar);
+          }}
+        />
 
         <View className="absolute top-3 right-3">
           <ButtonApp

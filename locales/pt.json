@@ -95,6 +95,7 @@
   "error": {
     "DEFAULT_ERROR": "Algo deu errado.",
     "LOAD_PROFILE_ERROR": "Falha ao carregar o perfil.",
+    "CHANGE_AVATAR_ERROR": "Falha ao alterar a imagem do avatar.",
     "CHANGE_LANGUAGE_ERROR": "Falha ao alterar o idioma.",
 
     "INVALID_IMAGE_TYPE": "Tipo de imagem inválido.",

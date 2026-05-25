@@ -14,6 +14,7 @@ type Props = {
   source?: AvatarKey;
   name?: string;
   size?: number;
+  allowEdit?: boolean;
   onChange?: (avatar: AvatarKey) => void;
 };
 
@@ -21,6 +22,7 @@ export function AvatarProfile({
   source,
   name = "default",
   size = 100,
+  allowEdit = false,
   onChange,
 }: Props) {
   const theme = useTheme();
@@ -44,8 +46,7 @@ export function AvatarProfile({
 
   function handleSelectAvatar(avatar: AvatarKey) {
     onChange?.(avatar);
-    
-    console.log("TODO: SENT TO API NEW AVATAR: " + avatar);
+
     setShowAvatarModal(false);
   }
 
@@ -85,18 +86,19 @@ export function AvatarProfile({
               </Text>
             </View>
           )}
-
           {/* Edit Button */}
-          <Pressable
-            onPress={() => setShowAvatarModal(true)}
-            className="absolute bottom-0 right-0 w-7 h-7 rounded-full justify-center items-center border-2"
-            style={{
-              backgroundColor: theme.colors.link,
-              borderColor: theme.colors.background,
-            }}
-          >
-            <Entypo name="edit" size={12} color={theme.colors.textLight} />
-          </Pressable>
+          {allowEdit && (
+            <Pressable
+              onPress={() => setShowAvatarModal(true)}
+              className="absolute bottom-0 right-0 w-7 h-7 rounded-full justify-center items-center border-2"
+              style={{
+                backgroundColor: theme.colors.link,
+                borderColor: theme.colors.background,
+              }}
+            >
+              <Entypo name="edit" size={12} color={theme.colors.textLight} />
+            </Pressable>
+          )}
         </View>
       </View>
 
