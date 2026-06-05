@@ -152,7 +152,7 @@ jest.mock("@/components/User/Chip", () => ({
   },
 }));
 
-jest.mock("@/components/User/Avatar", () => ({
+jest.mock("@/components/User/AvatarProfile", () => ({
   Avatar: ({ name }: any) => {
     const React = require("react");
     const { Text } = require("react-native");

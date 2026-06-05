@@ -13,6 +13,7 @@ import { Chip } from "./Chip";
 import { AvatarKey } from "@/constants/avatars";
 import { updateAvatar } from "@/src/api/profile.api";
 import { useAlert } from "@/contexts/alert/useAlert";
+import { useProfileStore } from "@/store/profile";
 
 type Props = {
   image: AvatarKey;
@@ -38,6 +39,8 @@ export default function ProfileCard({
   const theme = useTheme();
   const { t } = useTranslation();
   const { show } = useAlert();
+  const profile = useProfileStore((state) => state.profile);
+  const setProfile = useProfileStore((state) => state.setProfile);
 
   const levelText = `${t("screen.profile.level")} ${level}`;
 
@@ -49,7 +52,16 @@ export default function ProfileCard({
 
   async function handleEditAvatar(avatar: AvatarKey) {
     try {
-      await updateAvatar(avatar);
+      const avatarName = avatar.split(":")[1];
+
+      await updateAvatar(avatarName);
+
+      if (!profile) return;
+
+      setProfile({
+        ...profile,
+        image: avatar,
+      });
     } catch {
       const translatedMessage = t(`errors.CHANGE_AVATAR_ERROR`);
       show({

@@ -21,13 +21,17 @@ import { Sparkles } from "lucide-react-native";
 import InputField from "@/components/Core/InputField";
 import { AppText } from "@/components/Core/AppText"; // 👈 add
 import { useAlert } from "@/contexts/alert/useAlert";
+import { profile } from "@/src/api/profile.api";
+import { useProfileStore } from "@/store/profile";
 
 export default function RegisterScreen() {
   const theme = useTheme();
   const { t } = useTranslation();
   const { show } = useAlert();
+  const setProfile = useProfileStore((state) => state.setProfile);
 
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     control,
@@ -45,7 +49,13 @@ export default function RegisterScreen() {
 
   async function handleRegister(data: FormDataRegister) {
     try {
+      setIsLoading(true);
       await register(data);
+
+      const userProfile = await profile();
+
+      setProfile(userProfile);
+
       router.replace("/(tabs)");
     } catch (error: any) {
       const translatedMessage = t(`errors.${error.friendlyMessage}`);
@@ -54,6 +64,8 @@ export default function RegisterScreen() {
         type: "error",
         message: translatedMessage,
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -66,7 +78,7 @@ export default function RegisterScreen() {
     >
       <View className="flex-1 justify-center items-center p-6">
         <Image
-          source={require("@/assets/images/icon_transparent.png")}
+          source={require("@/assets/images/icon-transparent.png")}
           className="w-28 h-28 rounded-full mb-4"
         />
 
@@ -95,6 +107,7 @@ export default function RegisterScreen() {
               <InputField
                 placeholder={t("screen.register.fields.username") + "*"}
                 value={value}
+                disabled={isLoading}
                 onChange={onChange}
                 error={errors.username?.message}
                 isFocused={focusedInput === "username"}
@@ -112,6 +125,7 @@ export default function RegisterScreen() {
               <InputField
                 placeholder={t("screen.register.fields.email") + "*"}
                 value={value}
+                disabled={isLoading}
                 onChange={onChange}
                 error={errors.email?.message}
                 isFocused={focusedInput === "email"}
@@ -129,6 +143,7 @@ export default function RegisterScreen() {
               <InputField
                 placeholder={t("screen.register.fields.password") + "*"}
                 value={value}
+                disabled={isLoading}
                 onChange={onChange}
                 secureTextEntry
                 error={errors.password?.message}
@@ -147,6 +162,7 @@ export default function RegisterScreen() {
               <InputField
                 placeholder={t("screen.register.fields.confirmPassword") + "*"}
                 value={value}
+                disabled={isLoading}
                 onChange={onChange}
                 secureTextEntry
                 error={errors.confirmPassword?.message}
@@ -157,7 +173,10 @@ export default function RegisterScreen() {
             )}
           />
 
-          <ButtonGradient onPress={handleSubmit(handleRegister)}>
+          <ButtonGradient
+            onPress={handleSubmit(handleRegister)}
+            loading={isLoading}
+          >
             <Sparkles size={16} color={theme.colors.textLight} />
             <AppText className="font-semibold" color={theme.colors.textLight}>
               {t("screen.register.button.login")}
