@@ -1,18 +1,20 @@
-import { View } from "react-native";
 import { router } from "expo-router";
-
-//Theme
+import { View } from "react-native";
+import { useTheme } from "@/hooks/useTheme";
 import { useTranslation } from "react-i18next";
+import { AppText } from "../Core/AppText";
+import { ButtonApp } from "../Core/ButtonApp";
 import Card from "../Core/Card";
 import { ProgressBar } from "../Statistics/ProgressBar";
-import { Avatar } from "./Avatar";
+import { AvatarProfile } from "./AvatarProfile";
 import { Chip } from "./Chip";
-import { AppText } from "../Core/AppText";
-import { useTheme } from "@/hooks/useTheme";
-import { ButtonApp } from "../Core/ButtonApp";
+import { AvatarKey } from "@/constants/avatars";
+import { updateAvatar } from "@/src/api/profile.api";
+import { useAlert } from "@/contexts/alert/useAlert";
+import { useProfileStore } from "@/store/profile";
 
 type Props = {
-  image: string;
+  image: AvatarKey;
   name: string;
   email: string;
 
@@ -34,6 +36,9 @@ export default function ProfileCard({
 }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { show } = useAlert();
+  const profile = useProfileStore((state) => state.profile);
+  const setProfile = useProfileStore((state) => state.setProfile);
 
   const levelText = `${t("screen.profile.level")} ${level}`;
 
@@ -43,11 +48,26 @@ export default function ProfileCard({
 
   const percentage = Math.round(progress * 100);
 
-  const handleUpload = async () => {
-    console.info(
-      "TODO: Add logica para selecionar uma imagem da própria aplicação ou usar avatar dependedndo do tipo de login feito",
-    );
-  };
+  async function handleEditAvatar(avatar: AvatarKey) {
+    try {
+      const avatarName = avatar.split(":")[1];
+
+      await updateAvatar(avatarName);
+
+      if (!profile) return;
+
+      setProfile({
+        ...profile,
+        image: avatar,
+      });
+    } catch {
+      const translatedMessage = t(`errors.CHANGE_AVATAR_ERROR`);
+      show({
+        type: "error",
+        message: translatedMessage,
+      });
+    }
+  }
 
   return (
     <Card
@@ -69,7 +89,15 @@ export default function ProfileCard({
           gap: 12,
         }}
       >
-        <Avatar size={86} uri={image} name={name} onEditPress={handleUpload} />
+        <AvatarProfile
+          size={86}
+          source={image}
+          name={name}
+          allowEdit
+          onChange={(newAvatar) => {
+            handleEditAvatar(newAvatar);
+          }}
+        />
 
         <View className="absolute top-3 right-3">
           <ButtonApp
@@ -79,10 +107,7 @@ export default function ProfileCard({
           />
         </View>
 
-        <AppText
-          className="text-center font-bold"
-          variant="title"
-        >
+        <AppText className="text-center font-bold" variant="title">
           {name}
         </AppText>
         <AppText

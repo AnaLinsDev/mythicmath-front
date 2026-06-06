@@ -1,3 +1,16 @@
+jest.mock("@react-native-async-storage/async-storage", () => {
+  return require(
+    "@react-native-async-storage/async-storage/jest/async-storage-mock"
+  );
+});
+
+jest.mock("@/contexts/alert/useAlert", () => ({
+  useAlert: () => ({
+    show: jest.fn(),
+    hide: jest.fn(),
+  }),
+}));
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (mockKey: string) => mockKey,
@@ -152,10 +165,11 @@ jest.mock("@/components/User/Chip", () => ({
   },
 }));
 
-jest.mock("@/components/User/Avatar", () => ({
-  Avatar: ({ name }: any) => {
+jest.mock("@/components/User/AvatarProfile", () => ({
+  AvatarProfile: ({ name }: any) => {
     const React = require("react");
     const { Text } = require("react-native");
+
     return React.createElement(Text, null, `${name}-avatar`);
   },
 }));

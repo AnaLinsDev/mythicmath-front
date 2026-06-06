@@ -6,21 +6,13 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-
-// Components
 import CardAuth from "@/components/User/CardAuth";
 import ButtonGradient from "@/components/Core/ButtonGradient";
 import InputField from "@/components/Core/InputField";
 import { AppText } from "@/components/Core/AppText";
 import { AppHeader } from "@/components/Core/AppHeader";
-
-//Hooks
 import { useTheme } from "@/hooks/useTheme";
-
-// API
 import { updateUser } from "@/src/api/profile.api";
-
-// Schema
 import { FormDataUpdateUser, updateUserSchema } from "@/helper/zodSchema/user";
 import { useProfileStore } from "@/store/profile";
 import { useAlert } from "@/contexts/alert/useAlert";
