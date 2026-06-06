@@ -9,7 +9,7 @@ describe("UserInfo", () => {
   it("should render user name", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={5}
         xpCurrent={200}
@@ -23,7 +23,7 @@ describe("UserInfo", () => {
   it("should render avatar", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={5}
         xpCurrent={200}
@@ -37,7 +37,7 @@ describe("UserInfo", () => {
   it("should render level chip", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={10}
         xpCurrent={200}
@@ -53,7 +53,7 @@ describe("UserInfo", () => {
   it("should render progress bar texts", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={10}
         xpCurrent={250}
@@ -71,7 +71,7 @@ describe("UserInfo", () => {
   it("should calculate progress correctly", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={10}
         xpCurrent={250}
@@ -85,7 +85,7 @@ describe("UserInfo", () => {
   it("should cap progress at 100", () => {
     render(
       <UserInfo
-        image="https://example.com/avatar.png"
+        image="app-avatar:vampire"
         name="Ana"
         level={10}
         xpCurrent={1000}

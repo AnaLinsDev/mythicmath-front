@@ -1,7 +1,5 @@
 import { router } from "expo-router";
 import { View } from "react-native";
-
-//Theme
 import { useTheme } from "@/hooks/useTheme";
 import { useTranslation } from "react-i18next";
 import { AppText } from "../Core/AppText";
